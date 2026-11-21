@@ -8,4 +8,4 @@ The project was inspired by UniCard. An existing GIDE interface provided the bas
 
 Separate ROM and tape starter images are supplied without the games collection. Decompress the appropriate image before writing it to a backed-up, correctly identified whole device. The menu variants are not interchangeable. Download checksums are in `release/SHA256SUMS`; uncompressed sizes and hashes are in `release/manifest.json`.
 
-See `docs/TESTING.md` for emulator coverage and the current limits of physical validation.
+Complete ROM-to-menu boot has been demonstrated on the physical MZ-700 using CompactFlash. See `docs/TESTING.md` for the other hardware results, emulator coverage and remaining validation work.

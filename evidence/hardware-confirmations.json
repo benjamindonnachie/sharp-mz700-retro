@@ -1,0 +1,7 @@
+{
+  "source": "Benjamin Donnachie, direct hardware test confirmation",
+  "confirmed": [
+    "Complete replacement-ROM-to-GIDE-menu boot on the physical Sharp MZ-700 using CompactFlash"
+  ],
+  "scope": "Boot path confirmed; no additional native SAVE validation inferred."
+}

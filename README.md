@@ -37,7 +37,7 @@ See [Installation](docs/INSTALLATION.md), [BASIC](docs/BASIC.md), [CP/M](docs/CP
 
 The target is a PAL MZ-700 with 64 KiB RAM, GIDE at **20h**, an ATA master presenting 512-byte sectors and the original 40-column display. A HAL PCG is fitted to the development machine but is not required by the storage system. A 64 KiB image, containing sixteen copies of the 4 KiB monitor, is supplied for a W27C512 used through a suitable adapter.
 
-The fixed-partition CP/M build has booted on the physical Sharp. The replacement EPROM has reached its banner and recovery handler, and the matching CF image has been written and verified by complete readback. A complete ROM-to-menu boot with that updated card has not yet been recorded on the physical machine.
+**Complete ROM-to-menu boot has been demonstrated on the physical MZ-700 using CompactFlash.** The replacement EPROM boots through the card-resident bootstrap and RAM monitor into the GIDE file manager. The fixed-partition CP/M build has also booted on the physical Sharp, and the CF image has been verified by complete readback.
 
 The starter image boots in the emulator, launches BASIC with the expected free memory, and starts CP/M successfully. Further checks cover native SAVE compatibility, recovery and filesystem operations. [Testing](docs/TESTING.md) distinguishes these results from physical validation.
 

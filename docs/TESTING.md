@@ -22,8 +22,8 @@ The full emulator integration suite is not rerun by GitHub Actions, because the 
 
 ## Physical status
 
-The fixed-partition CP/M system has booted on the development MZ-700, with C: and D: directory listings. The replacement Winbond EPROM has been programmed and verified, and its banner and recovery handler run on the Sharp. The matching CF image has been written and verified across its complete 85,983,232-byte populated prefix.
+**Complete ROM-to-menu boot has been demonstrated on the physical MZ-700 using CompactFlash.** This confirms the replacement Winbond EPROM, card-resident bootstrap, lower-RAM monitor and GIDE file manager working together on the hardware.
 
-A successful complete ROM-to-menu boot using that updated card has not yet been recorded on the physical machine. Every native SAVE compatibility path also remains to be physically validated.
+The fixed-partition CP/M system has also booted on the physical machine, with C: and D: directory listings. The EPROM was verified after programming, and the matching CF image was verified across its complete 85,983,232-byte populated prefix. Physical validation of every native SAVE compatibility path remains outstanding.
 
 Earlier failures included device-initialisation problems and a separate adapter power-connection fault. Bounded retries provide recovery from some initialisation failures but do not demonstrate that an electrical fault has been resolved or that a particular adapter firmware is universally reliable.
