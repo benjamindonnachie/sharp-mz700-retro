@@ -12,5 +12,6 @@
     "Full CP/M source/toolchain rebuild completes and preserves the final public image",
     "No private workstation paths or credential patterns in staged project source"
   ],
-  "rom_image_sha256": "6ad480626382641ee5427ea7955d76fa233f0d747fedc3329e183c55ee8449d2"
+  "rom_image_sha256": "4f2330ee357b857834ce0dbeb8c773a5c7292b7270a40136cb90405d62f50021",
+  "documentation_revision": "0.1.1"
 }

@@ -1,10 +1,12 @@
-My Sharp MZ-700 GIDE card
+Sharp MZ-700 GIDE starter image
 
-I use the GIDE menu to launch machine-code MZT/MZF files, CP/M and BASIC.
-I load BASIC programmes from within GIDE BASIC using its SD: commands.
-I use native fixed C: and D: volumes for CP/M; my CP/M FAT32 work is still
-in development. The FAT32 partition is shared by my PC, menu and BASIC.
+The file manager launches compatible machine-code MZT/MZF files, CP/M
+and GIDE BASIC. BASIC programmes are loaded from within BASIC using SD:.
 
-I keep my own files in BASIC, GAMES and PCG. My RAM monitor saves to SAVES.
-I have not included my game collection in this public starter image.
-I switch the Sharp off before changing cards or IDE connections.
+CP/M uses fixed native C: and D: volumes. FAT32 support for CP/M is in
+development; the shared FAT32 partition currently serves the PC, file
+manager and BASIC.
+
+BASIC, GAMES and PCG are supplied as empty directories for additional
+software. The RAM monitor saves to SAVES. No games collection is included.
+Switch off the Sharp before changing media or IDE connections.

@@ -1,6 +1,6 @@
 {
   "date": "2026-11-21",
-  "image_sha256": "6ad480626382641ee5427ea7955d76fa233f0d747fedc3329e183c55ee8449d2",
+  "image_sha256": "4f2330ee357b857834ce0dbeb8c773a5c7292b7270a40136cb90405d62f50021",
   "rom_sha256": "aa1b259a501845a6394116f7d3e9610d5e8ff9ebf9045ef7d3dc96037266bcf7",
   "passed": [
     "CPU reset loads the RAM monitor and public menu; HELLO executes, returns to the RAM monitor, and G reopens the menu",

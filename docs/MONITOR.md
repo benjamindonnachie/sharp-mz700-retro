@@ -1,12 +1,12 @@
-# My ROM and RAM monitor
+# Monitor architecture and interface
 
-I keep the physical ROM to 4 KiB. After the original hardware initialisation, I try to load a checksummed raw bootstrap from the GIDE card. That bootstrap installs a 4 KiB RAM monitor below 1000h, selects the RAM bank and starts the FAT32 first stage. I then load the larger menu from `MENU.MZF`.
+The physical monitor occupies 4 KiB. After the original hardware initialisation, it loads a checksummed bootstrap from reserved card sectors. The bootstrap installs a 4 KiB monitor in lower RAM, selects that bank and starts the FAT32 first stage, which loads the main file manager from `MENU.MZF`.
 
-I keep all 23 original public jump vectors at their original addresses and retain their original vector bytes. In the physical ROM I retain the original console, keyboard, timer, sound and tape implementations. In the RAM monitor I redirect the native write helpers to GIDE and forward the cassette read/verify and melody helpers back to the physical ROM through bank-safe gateways.
+All 23 original public jump vectors retain their addresses and vector bytes. The physical ROM preserves the original console, keyboard, timer, sound and tape implementations. In the RAM monitor, native write helpers are redirected to GIDE; cassette read/verify and melody calls are forwarded to the physical ROM through bank-safe gateways.
 
-I retain J, L, M, V, D and B in the RAM monitor. I use **G**, **F** or **#** to return to the GIDE menu. I have replaced the old printer self-test command. Reset reselects the physical ROM and reloads the RAM monitor if an application has overwritten it.
+The RAM monitor retains J, L, M, V, D and B. **G**, **F** and **#** return to GIDE. The obsolete printer self-test is removed. Reset selects the physical ROM and reloads the RAM monitor, including after an application has overwritten lower RAM.
 
-## My reserved card sectors
+## Reserved sectors
 
 | Slot | LBA |
 | --- | --- |
@@ -17,48 +17,52 @@ I retain J, L, M, V, D and B in the RAM monitor. I use **G**, **F** or **#** to 
 | Lower RAM monitor | 8941h–8948h |
 | Temporary upper-RAM backup, twenty-four sectors | 8A00h–8A17h |
 
-I use the header magic `GIDEMN01`, a service identifier, fixed load and entry addresses, a bounded non-zero sector count and a 16-bit sum of the padded payload. I use these checks to detect corruption; I do not treat them as authentication.
+The service header contains `GIDEMN01`, a service identifier, fixed load/entry addresses, a bounded non-zero sector count and a 16-bit sum of the padded payload. These checks detect accidental corruption; they do not authenticate code.
 
-## My raw ROM interface
+## Physical ROM API
 
-I expose the descriptor at **0D8Eh** as `GIDE`, API version 1 and flags 0Fh, followed by jump entries:
+The descriptor at **0D8Eh** contains `GIDE`, API version 1 and flags 0Fh, followed by these jump entries:
 
-| Entry | My routine |
+| Entry | Routine |
 | --- | --- |
 | 0D94h | Initialise IDE |
 | 0D97h | Read 512 bytes |
 | 0D9Ah | Write 512 bytes |
-| 0D9Dh | Load a card service: A=1 bootstrap, A=2 SAVE service |
+| 0D9Dh | Load service: A=1 bootstrap, A=2 SAVE service |
 | 0DA0h | Boot GIDE |
 | 0DA3h | Native tape-load fallback |
 
-I use this interface only with the **physical lower ROM selected**. I put a bank-switching gateway and stack outside 0000h–0FFFh, select ROM with OUT E2h and restore lower RAM with OUT E0h before returning to RAM code. I do not call the ROM descriptor in the RAM monitor bank.
+The physical lower ROM must be selected. A bank-switching gateway and its stack must reside outside 0000h–0FFFh: select ROM with OUT E2h, call the entry, then restore lower RAM with OUT E0h before returning to RAM code. This descriptor is not available in the RAM monitor bank.
 
-For read/write I point IX to eight writable bytes, separate from the transfer buffer:
+For sector reads and writes, IX points to eight writable bytes outside the transfer buffer:
 
-| Offset | My context field |
+| Offset | Context field |
 | --- | --- |
-| +0..3 | Little-endian LBA28; upper nibble of byte 3 must be zero |
+| +0..3 | Little-endian LBA28; the upper nibble of byte 3 must be zero |
 | +4..5 | Little-endian buffer address |
 | +6 | Last sampled ATA status |
 | +7 | Internal command byte |
 
-I transfer exactly 512 bytes. The routines preserve IX and SP and clobber AF, BC, DE and HL. I check carry clear for success and carry set for failure; I do not rely on A. The routines leave the selected banks unchanged. I validate the buffer, stack and code placement myself: the raw interface does not supply partition guards, address-wrap checks, retries, write readback or cache flushes.
+Each transfer covers exactly 512 bytes. IX and SP are preserved; AF, BC, DE and HL are clobbered. Carry clear indicates success and carry set failure; A is unspecified. Memory-bank selection is unchanged. Buffer placement, address wrap, partition protection and overlap with live code, context or stack are the caller's responsibility.
 
-I disable interrupts around the call and restore the appropriate caller state afterwards. I do not call these routines concurrently or from an interrupt. IDE initialisation overwrites F800h–F9FFh and needs upper RAM there. I initialise once per device/session before transfers.
+The raw interface provides no automatic retry, write readback or cache flush. Interrupts must be disabled during calls and restored appropriately afterwards. Concurrent or interrupt-handler calls are unsupported. Initialisation overwrites F800h–F9FFh, requires upper RAM there and should precede transfers once per device/session.
 
-The service loader also overwrites 11D0h–11E2h and scratch at F800h–F9FFh, selects upper RAM and leaves it selected. I keep the stack outside the load region: 8000h–8FFFh for A=1 or D000h–EFFFh for A=2. On success I receive the entry in HL with carry clear; the loader does not execute it automatically. I allow AF, BC, DE, HL and IX to change and do not expect interrupt state to be preserved.
+## Service loader
 
-## My native SAVE redirection
+The loader overwrites 11D0h–11E2h and scratch at F800h–F9FFh. It selects upper RAM and leaves it selected. The stack must remain outside the load region: 8000h–8FFFh for A=1 or D000h–EFFFh for A=2, and outside the scratch buffer in either case.
 
-In the **RAM monitor** I retain S at 0F5Eh, WRINF at 0021h and WRDAT at 0024h. For example, I use `S900093FF9000` to save 9000h–93FFh inclusive, with execution at 9000h, under `/SAVES` on FAT32.
+On success, HL contains the service entry and carry is clear. The service is not executed automatically. AF, BC, DE, HL and IX are clobbered; interrupt state is not preserved.
 
-From an application I fill the standard 128-byte header at 10F0h, call WRINF and check carry, then call WRDAT and check carry. WRINF snapshots the header without writing the disk or loading an overlay. WRDAT checks the length and source again before saving the complete header and payload. I use one known-length MZF per pair, including zero-length data blocks; I do not emulate an indefinite sequence of cassette blocks. I repeat WRINF before retrying a failed WRDAT.
+## Native SAVE redirection
 
-I derive an 8.3 alias from the first eight title characters after leading spaces, while preserving the complete original header. I prompt before overwriting an existing ordinary file. I return A=0/carry clear on success, A=1/carry set on error, or A=2/carry set on cancellation, preserving BC, DE, HL, IX, IY and SP. I follow the original TIMFG=F0h interrupt re-enabling convention.
+In the **RAM monitor**, S at 0F5Eh, WRINF at 0021h and WRDAT at 0024h retain their entry addresses. For example, `S900093FF9000` saves 9000h–93FFh inclusive, with execution at 9000h, as an MZF under `/SAVES`.
 
-I accept non-empty sources in **1000h–CFFFh**, excluding the native workspace **10F0h–11F3h** and the 64 bytes below the caller's entry stack pointer plus its two-byte return address. I require the entry stack pointer within **1040h–CFFEh**, lower RAM selected and the normal upper I/O bank visible. I call serially, outside interrupt handlers.
+An application fills the standard 128-byte header at 10F0h, calls WRINF and checks carry, then calls WRDAT and checks carry. WRINF snapshots the header without disk writes or overlays. WRDAT rechecks the length and source before saving the complete header and payload. Each pair produces one known-length MZF, including zero-length data blocks; indefinite cassette block streams are not emulated. WRINF must be repeated before retrying a failed WRDAT.
 
-I verify the expected partition layout before scratch writes, back up and verify all **D000h–FFFFh** in the reserved sectors, load the checksum-pinned writer, perform the save, then restore and verify that upper RAM before returning. If restoration still fails after three tries, I stay in the lower-RAM recovery path with `RAM RESTORE ERROR - R RETRIES`; I do not return through known-incomplete memory.
+The FAT alias is derived from the first eight title characters after leading spaces, while the complete original header is retained. Existing ordinary files require overwrite confirmation. Results are A=0/carry clear for success, A=1/carry set for error and A=2/carry set for cancellation. BC, DE, HL, IX, IY and SP are preserved. Interrupt re-enabling follows the original TIMFG=F0h convention.
 
-I currently limit `/SAVES` to 64 ordinary visible entries. I retain the old file until replacement data is verified and published, but I do not claim journalled or power-fail-atomic writes. The physical ROM's write entry points still implement tape; my GIDE write redirection depends on the card-loaded RAM monitor.
+Non-empty sources must lie within **1000h–CFFFh**, excluding **10F0h–11F3h** and the 64 bytes below the caller's entry SP plus its two-byte return address. Entry SP must be within **1040h–CFFEh**, with lower RAM selected and the normal upper I/O bank visible. Calls must be serial and outside interrupt handlers.
+
+Before scratch writes, the expected partition layout is checked. All **D000h–FFFFh** is backed up and verified in the reserved sectors before the checksum-pinned writer is loaded. After saving, upper RAM is restored and verified before return. If restoration fails after three attempts, execution remains in lower RAM at `RAM RESTORE ERROR - R RETRIES`; it does not return through known-incomplete memory.
+
+The save directory is currently limited to 64 ordinary visible entries. Replacement data is written and verified before publication, but the filesystem is not journalled or power-fail atomic. These GIDE write services depend on the RAM monitor; the physical ROM's original write helpers remain cassette routines.

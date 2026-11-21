@@ -1,10 +1,10 @@
-# My fixed-partition CP/M 3 build
+# CP/M 3: fixed-volume build
 
-For this release I use **native CP/M filesystems at fixed offsets**, with 512-byte ATA sectors. I have not replaced BDOS's filesystem with FAT32. I am developing that separately.
+The released CP/M system uses **native filesystems at fixed offsets** and 512-byte ATA sectors. FAT32 support for CP/M is in development and is not part of this build. The FAT32 file manager and BASIC operate independently of CP/M's filesystem.
 
-I run non-banked CP/M 3 on the standard 64 KiB MZ-700, with the stock 40×25 display and GIDE at 20h. I do not require additional RAM, a SUC 80-column board or floppy hardware. I leave A: and B: unavailable and boot to **C>**.
+The target is a standard 64 KiB MZ-700 with GIDE at 20h and a 40×25 display. No additional RAM, SUC 80-column board or floppy interface is required. A: and B: are unavailable; the initial prompt is **C>**.
 
-## My card layout
+## Layout
 
 | Area | First LBA | Sector count |
 | --- | ---: | ---: |
@@ -15,15 +15,15 @@ I run non-banked CP/M 3 on the standard 64 KiB MZ-700, with the stock 40×25 dis
 | CPMLDR payload | 00008801h | 16 |
 | Shared FAT32 MBR partition, type 0Ch | 00009000h | 00020000h |
 
-I list FAT32 first in the MBR table for PC compatibility even though it physically follows the CP/M partition. I do not infer that CP/M can read FAT32 because both partitions share a card.
+FAT32 appears first in the MBR table for PC compatibility, despite its later physical position. The two native volumes use 4 KiB allocation blocks, 512 directory entries, no reserved tracks and no sector skew. CP/M file records remain 128 bytes; BDOS manages native 512-byte sector buffers.
 
-I use two 8 MiB CP/M volumes with 4 KiB allocation blocks, 512 directory entries and no reserved tracks or sector skew. BDOS manages the native 512-byte sector buffers; CP/M file records remain 128 bytes. My BIOS uses the Sharp's memory banking for keyboard and video access without expansion RAM.
+The BIOS uses the Sharp's existing memory banking for keyboard and video access. Here, non-banked CP/M means that no additional RAM banks are required; it does not mean that the peripheral mapping is static.
 
-## How I start it
+## Booting and supplied software
 
-I choose CP/M from the GIDE menu. The card's `CPM3.MZF` is the IDENTIFY-first MBR loader, with the white-on-blue screen setup applied before the CP/M console starts. I keep `CPM3.SYS` and `CCP.COM` on C:, user area 0.
+Select CP/M from the GIDE action bar. `CPM3.MZF` is the IDENTIFY-first MBR loader, with the white-on-blue attributes established across the screen before the CP/M console starts. `CPM3.SYS` and `CCP.COM` must remain on C:, user area 0.
 
-I can try:
+Example commands:
 
 ```text
 VERS3
@@ -38,10 +38,10 @@ CLINK HELLO
 HELLO
 ```
 
-I retain BDS C 1.60 and its supplied small examples on D: from my existing fixed-partition build. I preserve Leor Zolman's public-domain declaration separately under `reference/BDS-C-NOTICE.txt`. I close files before reset or power-off because CP/M owns live sector buffers.
+D: contains BDS C 1.60 and small compiler/I/O examples from the existing fixed-volume build. Leor Zolman's public-domain declaration is retained in `reference/BDS-C-NOTICE.txt`. Close files before resetting or switching off, because CP/M maintains live sector buffers.
 
 ## Memory and development
 
-I place BDOS at CC00h and BIOS at EB00h. I have 51,200 bytes of transient programme area at the prompt; an ordinary application can reclaim the command-loader prefix and use 51,968 bytes. I retain the native Sharp keyboard scanner through a documented relocation of the SUC binary, rather than claiming to have recovered its original source.
+BDOS starts at CC00h and BIOS at EB00h. The transient programme area is 51,200 bytes at the prompt; an application can reclaim the command-loader prefix and use 51,968 bytes. Keyboard support is a documented relocation of SUC machine code, not recovered original assembly source.
 
-I am investigating a **CP/M FAT32 version**, including the cost of replacing filesystem code and sharing buffers. I have not included those experiments as the default CP/M system here. I am also looking to recreate the **SUC 80-column modification** so I can do more substantial CP/M work on the Sharp. I keep this initial software compatible with the original display while that proceeds.
+Work on a CP/M FAT32 version includes evaluating BDOS/BIOS changes, buffer sharing and RAM requirements. The fixed-volume implementation remains the release baseline. Recreating the SUC 80-column modification is a separate hardware objective intended to support further CP/M work.

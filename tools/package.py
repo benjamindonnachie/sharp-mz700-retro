@@ -41,7 +41,7 @@ def main():
                        'uncompressed_sha256': hashlib.sha256(data).hexdigest()}
     # These hashes describe the exact historical binaries, independently of timestamps.
     manifest = {
-        'version': '0.1.0', 'publication_date': '2026-11-21',
+        'version': '0.1.1', 'firmware_version': '0.1.0', 'publication_date': '2026-11-21',
         'rom_banner_date': '2026-11-18', 'gide_base': '20h',
         'cpm_filesystem': 'fixed native C/D volumes', 'cpm_fat32': 'in development',
         'images': images,

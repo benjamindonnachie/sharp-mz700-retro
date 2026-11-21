@@ -1,13 +1,13 @@
-# How I use my GIDE diagnostic
+# GIDE diagnostics
 
-I launch `GIDETST.MZF` from the menu. I use its task-register patterns, IDENTIFY information and repeated sector reads to separate device communication from filesystem or boot-image problems. I display the RTC directly from its registers, check that seconds advance, and can set a validated date/time in the range 1978–2077.
+`GIDETST.MZF` provides task-register pattern tests, IDENTIFY information, repeated sector reads and RTC checks. The clock display reads the RTC registers directly and checks that seconds advance. A setting option accepts a validated date/time in the range 1978–2077.
 
-I enter a new RTC value as `YYYYMMDDHHMMSS`; for example, `20261121143000`. I check the resulting readback rather than assuming an accepted input proves that the RTC is counting.
+Enter the RTC value as `YYYYMMDDHHMMSS`, for example `20261121143000`. The diagnostic verifies the readback; a successful setting alone does not establish that the clock continues counting.
 
-## My optional write test
+## Optional sector write test
 
-I keep the sector write test optional and require an explicit `WRITE` confirmation. I enter a sector number as **eight hexadecimal LBA digits**; that input is an address, not the data pattern to write. I do not assume that the last sector is unused or choose a live filesystem sector casually.
+The address prompt accepts **eight hexadecimal LBA digits**, not a data pattern. The test requires an explicit `WRITE` confirmation. The final sector is not necessarily unused, and any selected sector may contain filesystem data.
 
-I read the original sector twice into RAM and compare the copies, write and read back five test patterns, then restore and verify the original data. If restoration fails, I retain the backup in RAM and offer another restoration attempt. I do not reset, switch off or remove the card while a failed restoration is pending.
+The original sector is read twice into RAM and the copies compared. Five patterns are then written and verified before the original is restored and checked by readback. If restoration fails, the RAM backup is retained and another restoration attempt is offered.
 
-I still take an independent card backup first. A RAM backup cannot protect the original sector if I lose power during the test. I do not use this test as a substitute for checking the complete card image after installing the boot software.
+Do not reset, switch off or remove the card while a failed restoration is pending. Take an independent backup before using the test: a RAM copy cannot protect the original sector against power loss during the operation.

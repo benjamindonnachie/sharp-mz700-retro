@@ -1,51 +1,59 @@
-# How I install the GIDE software
+# Installation
 
-I use GIDE at base address **20h**, with the storage device selected as ATA master. I switch the Sharp off before fitting or removing the card or changing IDE connections.
+The software expects GIDE at **20h**, an ATA master and 512-byte logical sectors. Switch off the Sharp before fitting or removing storage media or changing IDE connections.
 
-## My two boot arrangements
+## Card images
 
-| My boot arrangement | Card image | First stage | Menu on the card |
+| Boot arrangement | Image | First stage | Matching menu |
 | --- | --- | --- | --- |
-| Original Sharp monitor and tape | `release/gide-tape-card.img.gz` | `release/tape/GIDE-BOOT.MZT` | `release/tape/MENU.MZF` |
-| Replacement GIDE monitor ROM | `release/gide-rom-card.img.gz` | My physical 4 KiB monitor ROM | `release/rom/MENU.MZF` |
+| Original monitor and tape | `release/gide-tape-card.img.gz` | `release/tape/GIDE-BOOT.MZT` | `release/tape/MENU.MZF` |
+| Replacement monitor ROM | `release/gide-rom-card.img.gz` | Replacement 4 KiB ROM | `release/rom/MENU.MZF` |
 
-I decompress the selected `.img.gz` before writing it. I write the resulting image to the **whole device**, starting at byte zero, rather than to a partition or as a file. I check the device identity and take a backup first, because the image replaces the partition table and the populated area of the card. I do not supply an automatic physical-disk writer in this repository.
+Decompress the appropriate image and write it to the **whole device**, starting at byte zero. It is not a file to copy into an existing partition. Confirm the device identity and take a backup first: writing the image replaces the partition table and populated area of the card. No automatic physical-disk writer is included.
 
-Each image is **85,983,232 bytes**, with a conventional MBR, fixed native CP/M volumes and a shared 64 MiB FAT32 partition. I can use a larger card, but this release leaves its remaining capacity unallocated.
+Both images are **85,983,232 bytes** and contain an MBR, the fixed CP/M volumes and a 64 MiB FAT32 partition. Larger cards are supported, with the remaining capacity left unallocated.
 
-I verify the download with `release/SHA256SUMS`. After writing, I compare the complete image-sized prefix of the card with the uncompressed image and eject the device before unplugging it.
+Download checksums are listed in `release/SHA256SUMS`. After writing, compare the complete image-sized prefix of the card with the uncompressed image, then eject it before removal.
 
-## My replacement ROM
+## Replacement ROM
 
-I use `release/rom/MZ700-GIDE-MONITOR-4K.bin` for a compatible 4 KiB EPROM, or `release/rom/MZ700-GIDE-MONITOR-W27C512-64K.bin` for my W27C512. The latter repeats the same monitor sixteen times. I have verified it using a T48 programmer and the `W27C512@DIP28` minipro profile.
+The original monitor is a Mitsubishi M5L2732K, a 24-pin 4 KiB EPROM at motherboard position **5H**. The replacement firmware is supplied in two forms:
 
-I use an adapter because the original Mitsubishi M5L2732K monitor at position 5H is a 24-pin part, while my W27C512 is a 28-pin part. I check the complete pin mapping, chip-enable and output-enable wiring, supply polarity and orientation. I hold A12–A15 at defined logic levels on the adapter; with the mirrored image I can tie all four high or all four low. I keep these straps off the bare chip so they are absent when I put it in the programmer.
+- `release/rom/MZ700-GIDE-MONITOR-4K.bin`: the physical 4 KiB monitor image.
+- `release/rom/MZ700-GIDE-MONITOR-W27C512-64K.bin`: sixteen identical copies for a 28-pin W27C512.
 
-After reset I expect:
+The W27C512 requires a correctly wired adapter. Check the address/data mapping, enable signals, power connections and orientation. Hold A12–A15 at defined levels on the adapter. With the mirrored image, tying all four high or all four low selects an identical copy. Keep these straps on the adapter rather than the chip so they are absent during programming.
+
+The Winbond image has been programmed and verified with a T48 using minipro's `W27C512@DIP28` profile. On reset, the firmware displays:
 
 ```text
 GIDE BOOT MONITOR V0.1.0
 2026-11-18
 ```
 
-The ROM makes five bounded bootstrap attempts. If they fail, I get `GIDE ERROR R/L`: I use **R** to retry or **L** to fall back to the native tape loader. I first check that I wrote the ROM card image, because the older tape card does not contain the required raw sectors.
+The ROM makes five bounded bootstrap attempts. `GIDE ERROR R/L` indicates that loading or validation failed: **R** retries; **L** enters the original tape loader. A card prepared for tape boot alone lacks the raw bootstrap sectors required by this ROM.
 
-## My tape fallback
+## Tape boot
 
-With the original monitor ROM, I enter **L** and play `GIDE-BOOT.MZT` using my cassette transfer arrangement. MZT is a tape-file container, not an audio waveform. The small first stage loads `MENU.MZF` from the FAT32 root.
+With the original monitor, enter **L** and play `GIDE-BOOT.MZT` through a suitable cassette transfer arrangement. MZT is a tape-file container, not an audio waveform. The first stage reads `MENU.MZF` from the FAT32 root.
 
-I do not use that standalone tape first stage with the RAM-monitor menu. I keep each card image with its matching first stage.
+Use the tape card image with this standalone first stage. The RAM-monitor menu requires the replacement ROM's bootstrap and must not be substituted into this arrangement.
 
-## How I use the menu
+## File manager
 
-I move with the cursor keys and press **Return** to open a folder or load a compatible machine-code file. I use **Delete** for the parent folder and **Space** for the action bar: CP/M, BASIC, Rescan, Parent and Monitor.
+| Key | Action |
+| --- | --- |
+| Cursor keys | Move the selection |
+| Return | Open a folder or load a compatible machine-code file |
+| Delete | Return to the parent directory |
+| Space | Open the action bar: CP/M, BASIC, Rescan, Parent or Monitor |
 
-I use `TITLES.IDX` files when I want catalogue names rather than short filenames. The browser sorts by complete title and shows the selected title along the bottom. I use `hardware/gide-menu/title_index.py` to generate these indexes from my own `CATALOG.JSN` data.
+Folders precede files in the alphabetically sorted, two-column display. Where `TITLES.IDX` is present, catalogue titles determine sorting and the selected full title appears along the bottom. `hardware/gide-menu/title_index.py` generates these indexes from `CATALOG.JSN` data.
 
-I load BASIC programmes from within BASIC, rather than treating them as machine-code applications in the browser. I keep native CP/M files on C: and D:, separate from the FAT32 directories.
+BASIC programmes are loaded from within GIDE BASIC. CP/M files belong on the native C: and D: volumes, separately from the FAT32 directories.
 
-## My hardware observations
+## Hardware observations
 
-I initially had instability with a roughly 10 cm CPU-to-GIDE ribbon extension. Shortening it to less than 4 cm resolved that behaviour on my machine. I regard that as an observation about my wiring and loading, rather than a universal cable-length specification.
+On the development machine, a roughly 10 cm CPU-to-GIDE ribbon extension caused instability. Shortening it to less than 4 cm resolved that behaviour. This is an observation about that assembly, rather than a universal cable-length specification.
 
-I check power and connectors before diagnosing a loader fault. I previously encountered a hot adapter power connection and display corruption, and I do not treat software retries as a cure for a power fault.
+A separate adapter power-connection fault caused heating and display corruption. Check supply integrity and connectors before attributing failures to filesystem or boot code; software retries do not resolve an electrical fault.

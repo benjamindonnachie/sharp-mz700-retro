@@ -1,47 +1,46 @@
-# How I build this release
+# Building
 
-I use Python 3.10 or later for the assembler and packaging scripts. I include the pinned pyz80 assembler, the monitor reference, the UniCard BASIC reference and the fixed CP/M partition seed so my normal firmware build does not need my archive drives or a network download.
+Python 3.10 or later is required. The repository includes the pinned pyz80 assembler, monitor and BASIC references, and fixed CP/M partition seed; the default build does not depend on external archive drives or downloads.
 
-From the repository root I run:
+From the repository root:
 
 ```sh
 python3 tools/build.py
 ```
 
-I reassemble the diagnostic, tape first stage, menu, BASIC patch, physical ROM, SAVE service and RAM monitor. I then create separate ROM and tape card images and check their files, partition offsets, bootstrap checksums and helper vectors. I require my ROM and patched BASIC to reproduce the known binary hashes before I accept the package.
+This reassembles the diagnostic, tape first stage, file manager, BASIC patch, physical monitor, SAVE service and RAM monitor. It then constructs the ROM and tape starter images and checks their files, partition offsets, bootstrap checksums and helper vectors. The monitor and patched BASIC must reproduce the recorded binary hashes.
 
-For the default build I reuse the pinned CP/M system/loader binaries in `reference/cpm-build/`, and assemble their matching bootstrap. To rebuild the CP/M BIOS and system with the included ZXCC/RMAC/LINK/GENCPM toolchain as well, I run:
+The default build uses the pinned CP/M system and loader binaries in `reference/cpm-build/`, then assembles the matching bootstrap. To rebuild the CP/M BIOS and system through ZXCC, RMAC, LINK and GENCPM as well:
 
 ```sh
 python3 tools/build.py --rebuild-cpm
 ```
 
-For that option I also need a native C compiler, Make and a POSIX environment. I build ZXCC in a temporary directory rather than installing it system-wide. I retain the fixed C:/D: seed for the standard utility files and BDS C examples, then replace its generated system components. I have not added a CP/M FAT32 filesystem to this process.
+That option also requires a native C compiler, Make and a POSIX environment. ZXCC is built in a temporary directory. The fixed partition seed supplies the standard utilities and BDS C examples, while generated system components are replaced. This process retains the native C:/D: filesystem.
 
-## Files I produce
+## Outputs
 
-- I put generated assembly, maps and metadata in each component's ignored `build/` or `build-mbr/` directory.
-- I put the publication artifacts in `release/`, with separate `rom/` and `tape/` menu variants.
-- I keep raw `.img` files out of Git and publish deterministic gzip versions, with checksums for both the compressed downloads and the uncompressed images.
-- I preserve the ROM's **18 November 2026** banner date for this build; my initial repository publication is **21 November 2026**. I have not changed firmware bytes merely to update the publication date.
+Generated assembly, maps and metadata go into each component's ignored `build/` or `build-mbr/` directory. Publication artifacts go into `release/`, with distinct `rom/` and `tape/` menu variants. Raw images are excluded from Git; deterministic gzip versions are supplied with compressed and uncompressed checksums.
 
-I can check an existing release without rebuilding it:
+The firmware remains V0.1.0, dated **18 November 2026**. Repository release v0.1.1 revises the documentation; it does not change the executable firmware. The card images include a revised README, so their checksums differ from the withdrawn package.
+
+To validate the supplied artifacts without rebuilding:
 
 ```sh
 python3 tests/validate_release.py
 ```
 
-## My source layout
+## Source layout
 
-| Directory | What I keep there |
+| Directory | Contents |
 | --- | --- |
-| `hardware/gide-monitor/` | My physical/RAM monitor and native SAVE gateway |
-| `hardware/gide-menu/` | My FAT32 reader, tape first stage, browser and title indexes |
-| `hardware/gide-basic/` | My BASIC patches, compact driver and shared read/write workspace |
-| `hardware/gide-diagnostic/` | My ATA/RTC diagnostic |
-| `cpm/mz700-40/` | My 40-column fixed-volume BIOS and boot sources |
-| `cpm/cpm3-on2/` | The preserved CP/M build inputs and ZXCC archive |
-| `reference/` | My pinned binary inputs and their provenance |
-| `evidence/` | My recorded emulator and release checks |
+| `hardware/gide-monitor/` | Physical and RAM monitor, native SAVE gateway |
+| `hardware/gide-menu/` | FAT32 reader, tape first stage, file manager and title indexes |
+| `hardware/gide-basic/` | BASIC patches, compact driver and shared workspace |
+| `hardware/gide-diagnostic/` | ATA and RTC diagnostic |
+| `cpm/mz700-40/` | Fixed-volume BIOS and 40-column boot sources |
+| `cpm/cpm3-on2/` | Preserved CP/M build inputs and ZXCC archive |
+| `reference/` | Pinned binary inputs and provenance |
+| `evidence/` | Recorded emulator and release checks |
 
-I have not bundled the custom emulator itself in this first repository. I explain the scope of the emulator evidence in [my testing notes](TESTING.md).
+The custom emulator and its complete historical test fixtures are not bundled. See [Testing](TESTING.md) for the scope of the supplied evidence and automated checks.
