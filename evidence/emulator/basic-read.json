@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "case": "Stock BASIC tokeniser, unchanged first-stage/menu launch, fragmented BASIC LOAD/RUN, MZT, directory traversal, missing files and duplicate-name refusal; UniCard disconnected",
+      "passed": true
+    },
+    {
+      "case": "Archived ANIMALS S-BASIC programme, different saved load address, fragmented FAT32 file and LIST",
+      "passed": true
+    },
+    {
+      "case": "bad-header returns to BASIC and subsequent valid load succeeds",
+      "passed": true
+    },
+    {
+      "case": "short-chain returns to BASIC and subsequent valid load succeeds",
+      "passed": true
+    },
+    {
+      "case": "cyclic-chain returns to BASIC and subsequent valid load succeeds",
+      "passed": true
+    },
+    {
+      "case": "Inherited 64-entry BASIC directory cache: final entry loads, entry 65 is unavailable, then valid load succeeds",
+      "passed": true
+    },
+    {
+      "case": "Missing IDE device exhausts five attempts, reports an error and leaves BASIC usable",
+      "passed": true
+    },
+    {
+      "case": "Transient zero ATA status recovers on the second initialisation attempt and loads a programme",
+      "passed": true
+    },
+    {
+      "case": "Retired RAM debugger entry restores the motherboard ROM monitor",
+      "passed": true
+    }
+  ],
+  "sha256": "1c6560cc005e33aa5bac82d12564128f84272ef3cb4ecc6130390dfcc45d97f2",
+  "unicard_connected": false,
+  "writable_fixture_images_unchanged": true
+}

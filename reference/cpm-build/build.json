@@ -1,0 +1,405 @@
+{
+  "version": "0.2.0-mz700-40-mbr",
+  "memory_bytes": 65536,
+  "top_page": "FF",
+  "layout": {
+    "BIOS3": {
+      "base": 60160,
+      "bytes": 5376
+    },
+    "BDOS3": {
+      "base": 52224,
+      "bytes": 7936
+    }
+  },
+  "driver_base": 60556,
+  "driver_bytes": 4861,
+  "relocation_words": 265,
+  "symbols": {
+    "null": 60610,
+    "eof": 60611,
+    "yes": 60614,
+    "sector_translate": 60617,
+    "driver_init": 60620,
+    "install_helper": 60627,
+    "helper_image": 60639,
+    "mmio_write": 60658,
+    "write_irq_off": 60681,
+    "mmio_read": 60686,
+    "read_irq_off": 60709,
+    "mmio_copy": 60715,
+    "copy_irq_off": 60730,
+    "keyboard_init": 60732,
+    "console_status": 60772,
+    "console_input": 60784,
+    "keyboard_safe_call": 60799,
+    "keyboard_target": 60816,
+    "keyboard_irq_off": 60838,
+    "keyboard_saved_sp": 60845,
+    "keyboard_result": 60847,
+    "keyboard_stack": 60848,
+    "keyboard_stack_end": 61040,
+    "suc_blob": 61041,
+    "suc_F0A0": 61060,
+    "suc_F398": 61820,
+    "suc_F3D6": 61882,
+    "suc_no_draw": 62203,
+    "suc_alpha": 62204,
+    "suc_not_alpha": 62217,
+    "suc_config": 62219,
+    "suc_macros": 62235,
+    "suc_special_macros": 62491,
+    "suc_rom_normal": 62619,
+    "suc_rom_shift": 62683,
+    "suc_state": 62747,
+    "suc_state_end": 62795,
+    "console_init": 62796,
+    "console_output": 62815,
+    "output_character": 62832,
+    "begin_escape": 62904,
+    "carriage_return": 62910,
+    "backspace": 62915,
+    "wrap_line": 62925,
+    "line_feed": 62929,
+    "scroll_up": 62941,
+    "tab": 62974,
+    "next_tab_space": 62984,
+    "home": 62994,
+    "clear_screen": 63002,
+    "clear_eol": 63025,
+    "clear_eos": 63043,
+    "blank_cells": 63057,
+    "escape_character": 63075,
+    "address_begin": 63145,
+    "address_row": 63151,
+    "bad_row": 63160,
+    "row_ok": 63161,
+    "address_column": 63170,
+    "bad_column": 63179,
+    "column_ok": 63180,
+    "cursor_up": 63188,
+    "cursor_down": 63198,
+    "cursor_right": 63209,
+    "cursor_on": 63220,
+    "cursor_off": 63226,
+    "logical_position": 63231,
+    "row_times_40": 63244,
+    "add_column": 63247,
+    "screen_address": 63255,
+    "physical_address_screen": 63261,
+    "draw_character": 63266,
+    "hide_cursor": 63280,
+    "update_cursor": 63299,
+    "cursor_tick_done": 63306,
+    "cursor_tick": 63311,
+    "cursor_row": 63357,
+    "cursor_column": 63358,
+    "escape_state": 63359,
+    "terminal_error": 63360,
+    "cursor_visible": 63361,
+    "cursor_drawn": 63362,
+    "cursor_address": 63363,
+    "cursor_saved_character": 63365,
+    "console_end": 63366,
+    "select": 63367,
+    "select_c": 63380,
+    "select_d": 63387,
+    "select_hd": 63392,
+    "select_failed": 63409,
+    "disk_home": 63414,
+    "set_track": 63417,
+    "set_dma": 63422,
+    "set_sector": 63427,
+    "read": 63432,
+    "write": 63444,
+    "io_error": 63456,
+    "physical_address": 63459,
+    "address_c": 63498,
+    "address_error": 63507,
+    "ata_idle": 63509,
+    "idle_loop": 63512,
+    "ata_error": 63531,
+    "ata_drq": 63533,
+    "wait_loop": 63536,
+    "wait_again": 63558,
+    "issue": 63565,
+    "issue_error": 63597,
+    "ata_read": 63600,
+    "ata_write": 63621,
+    "transfer_done": 63644,
+    "track": 63651,
+    "dma_address": 63653,
+    "active": 63655,
+    "lba": 63656,
+    "physical_sector": 63658,
+    "dph_c": 63660,
+    "dph_d": 63685,
+    "dpb": 63710,
+    "dir_bcb": 63727,
+    "data_bcb": 63739,
+    "allocation_c": 63751,
+    "allocation_d": 64007,
+    "directory_buffer": 64263,
+    "data_buffer": 64775,
+    "resident_end": 65287,
+    "bank_test_area": 65288,
+    "high_stack_base": 65352,
+    "high_stack_end": 65416
+  },
+  "helper": {
+    "read": "003B",
+    "write": "0041",
+    "copy": "0047",
+    "bytes": 19
+  },
+  "program_ceiling": 51456,
+  "tpa_bytes": 51200,
+  "loader_prefix_bytes": 768,
+  "disk": {
+    "physical_sector_bytes": 512,
+    "psh": 2,
+    "phm": 3,
+    "records_per_track": 128,
+    "physical_sectors_per_track": 32,
+    "deblocking": "DRI BDOS",
+    "bios_dma": "512-byte direct INIR/OTIR",
+    "buffers": {
+      "directory": 512,
+      "data": 512,
+      "shared_across_drives": true
+    },
+    "bcb_bytes": 24,
+    "partition_offset_sectors": 2048
+  },
+  "console": {
+    "columns": 40,
+    "lines": 25,
+    "scb_width": 39,
+    "scb_page_length": 24,
+    "gencpm_input": "explicit decimal #40/#25"
+  },
+  "cursor": {
+    "glyph": 239,
+    "timer_address": 57346,
+    "timer_bit": 6,
+    "visible_when": 0,
+    "state_bytes": 9,
+    "service": "CONOUT and CONST/CONIN polling",
+    "attributes_preserved": true
+  },
+  "boot": {
+    "header": "GIDE40!!",
+    "header_lba": 34816,
+    "loader_lba": 34817,
+    "loader_bytes": 7808,
+    "sectors": 16,
+    "checksum": 21512,
+    "tape_payload_bytes": 645,
+    "load_address": 32768,
+    "execution_address": 32768,
+    "gide_base": 32,
+    "boot_rom_required": false
+  },
+  "partition": {
+    "style": "MBR",
+    "type_hex": "52",
+    "start_lba": 2048,
+    "sectors": 32785,
+    "active": false,
+    "identity": "MZ700 GIDE CPM3",
+    "unused_card_tail": "not covered by partition"
+  },
+  "installed_files": [
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "CPM3.SYS",
+      "bytes": 13568,
+      "sha256": "e6c2c9a643e41cdf8a408b95fe19ea69839938dec8c8cb1a3b4f3489e545647f"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "CCP.COM",
+      "bytes": 3200,
+      "sha256": "f1837073d217075223d17dd81d068481819665273b59fbb3502c2f9068e8a671"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "DIR.COM",
+      "bytes": 14559,
+      "sha256": "142f9d22a80893236c4c6166b4ecf409057048a1323cdea74c2ed10dcbb2791b"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "PIP.COM",
+      "bytes": 8632,
+      "sha256": "b0b40eada6cebd512333989fdc65f8fa9e2321e2565a633063ae7cac9b02005d"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "SHOW.COM",
+      "bytes": 8376,
+      "sha256": "17a8561c18d1b9dc4d747f0a1ecd36ceb98ade6be2c2133d5ec1774769a4bcee"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "VERS3.COM",
+      "bytes": 128,
+      "sha256": "8b37785aa43cd5327d61cc281210e33ac4418caca843c320124ae203ed931a43"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "MC4.COM",
+      "bytes": 128,
+      "sha256": "d4d2ea6fcef18d9f6d086610c9523eda3008329f166a3902d263894bf9142e9e"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "TESTC.COM",
+      "bytes": 896,
+      "sha256": "574836eb1edfbc6c6b003e138d8b066ee0d0d3e320b9a1f7a7f7c51c096f21fa"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "TESTD.COM",
+      "bytes": 896,
+      "sha256": "653ff1526d17b3368ccb3ed93898270577ef4faf9ac5aa55236b624ab1fcc319"
+    },
+    {
+      "drive": "C",
+      "user": 0,
+      "name": "README.TXT",
+      "bytes": 628,
+      "sha256": "b87977ab6774a7c3d236051c9a83529c764b28b7ddcc21bc9643726e5f1f0e4c"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "CC.COM",
+      "bytes": 15360,
+      "sha256": "fe79f90f0888c48a3595c484f9019a24309c63af4a296f9aa37936aa0ce34d7b"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "CC2.COM",
+      "bytes": 17280,
+      "sha256": "63ee50a81ab636a0bdb97cfcfe38815af41af7883683ce81e582bdd9fbc46351"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "CLINK.COM",
+      "bytes": 5504,
+      "sha256": "e756b0c5e78df4446ef21a0179db7ebf6eff537bc4a64005cb08b5b43a0f4276"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "C.CCC",
+      "bytes": 1536,
+      "sha256": "2f9c09dc7ab541b0b1da8ea593db0cc79b69ce38ecbe1f61baf92431a6aa9b50"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "CLIB.COM",
+      "bytes": 5376,
+      "sha256": "ae5046dac4816dee120353b046c04139b014214017d462dfb9d793f43a17e782"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "DEFF.CRL",
+      "bytes": 12288,
+      "sha256": "8a5c2070c2aad32a1bd6257d26abb220aa312c5a10e2d8acf6fbdf4da73c870a"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "DEFF2.CRL",
+      "bytes": 5376,
+      "sha256": "8bd4578862f5a25f5b1575725a52ec4f5da2a2f55c071e6f30a511243d6f06f5"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "STDIO.H",
+      "bytes": 1664,
+      "sha256": "06f4455b52de1667e79617777ca8aded0857657e4c669a7ccfe809ae49131810"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "HELLO.C",
+      "bytes": 58,
+      "sha256": "55dab20c37fed4c090a817c975ae8bc74e4ddd2ee7a278171459c2d796116aa8"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "IOCHECK.C",
+      "bytes": 675,
+      "sha256": "ec64692debf4fb61992a1e78977674d265caa822a91de30901276af182eb554b"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "HELLO.COM",
+      "bytes": 3456,
+      "sha256": "5f499804c54e90defcab72f1600fabe88810bab19aefbf5a9dfe3076c4f235d5"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "IOCHECK.COM",
+      "bytes": 3328,
+      "sha256": "8d3f88b101134aa899444d7a29285906eb8b5b05cca8f5ddbbaa2bde2c94f8a8"
+    },
+    {
+      "drive": "D",
+      "user": 0,
+      "name": "DEMO.TXT",
+      "bytes": 75,
+      "sha256": "f9864d6acf9093ad3825da12c9b082232a1130160462f3ecbf060bee16b06ba6"
+    }
+  ],
+  "files": {
+    "cpmldr.com": {
+      "bytes": 7808,
+      "sha256": "8c2662f91837231dbc8d5bfeb4e0fb0e3d1b040081fea5d7858af5593235bfe7"
+    },
+    "cpm3.sys": {
+      "bytes": 13568,
+      "sha256": "e6c2c9a643e41cdf8a408b95fe19ea69839938dec8c8cb1a3b4f3489e545647f"
+    },
+    "bios3.spr": {
+      "bytes": 6272,
+      "sha256": "b89f9e6f0eddef29d8afad98e3c3bfcca34674b557e7e73b311892b9ec39c43a"
+    },
+    "gide-cpm3-mz700-40-mbr.img": {
+      "bytes": 17834496,
+      "sha256": "0866629c10ba55652e579653b0a7d553a6c4f4b589b7914d4bdd937de9cfd58e"
+    },
+    "stage.bin": {
+      "bytes": 645,
+      "sha256": "15e58b073518fd1c809b8c445d01a09823c306e0a1020ee68d6d3e317e6c3c7b"
+    },
+    "CPM3-MBR.MZT": {
+      "bytes": 773,
+      "sha256": "4d12d643a56a80d5e01753272a6b7fda8a7758cc80e5f7f99df62c5db8b65ace"
+    },
+    "stock-rom.bin": {
+      "bytes": 16384,
+      "sha256": "98e58d531d3872a0188db2fa877ee32b2add5a5dcab0d81e571f2612defca0aa"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.DS_Store
+hardware/*/build/
+cpm/mz700-40/build*/
+*.img
+*.log
+*.symbols
+*.map
+*.sym
+!reference/cpm-build/*.sym
+*.dSYM/
+.venv/
+venv/

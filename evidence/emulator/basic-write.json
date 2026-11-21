@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "case": "New SAVE/reload/run through unchanged menu, duplicate/MZT/long-name refusal and alternating read/write/directory contexts",
+      "passed": true
+    },
+    {
+      "case": "Fragmented allocation, mirrored FAT updates and in-place sector verification",
+      "passed": true
+    },
+    {
+      "case": "Final directory slot and allocation of a new directory cluster",
+      "passed": true
+    },
+    {
+      "case": "Reuse of deleted directory slot and protection of an existing hidden file",
+      "passed": true
+    },
+    {
+      "case": "Large BASIC programme, more than 32 allocation entries, and reuse of history/plan workspace",
+      "passed": true
+    },
+    {
+      "case": "Near-full live array memory survives SAVE; native maths and clean rejection of removed FD/RS devices",
+      "passed": true
+    },
+    {
+      "case": "Two-sector clusters, file allocation and correct directory end-marker preservation",
+      "passed": true
+    },
+    {
+      "case": "Non-mirrored FAT32 honours the active FAT and leaves the inactive copy unchanged",
+      "passed": true
+    },
+    {
+      "case": "full-volume refuses SAVE without any disk mutation",
+      "passed": true
+    },
+    {
+      "case": "full-directory refuses SAVE without any disk mutation",
+      "passed": true
+    },
+    {
+      "case": "mirror-conflict refuses SAVE without any disk mutation",
+      "passed": true
+    },
+    {
+      "case": "Injected readback mismatch drains DRQ, refuses publication and permits subsequent SAVE",
+      "passed": true
+    },
+    {
+      "case": "Injected failure before write 3: no file publication and all original files preserved",
+      "passed": true
+    },
+    {
+      "case": "Injected failure before write 13: no file publication and all original files preserved",
+      "passed": true
+    },
+    {
+      "case": "Injected failure before write 30: no file publication and all original files preserved",
+      "passed": true
+    }
+  ],
+  "sha256": "1c6560cc005e33aa5bac82d12564128f84272ef3cb4ecc6130390dfcc45d97f2",
+  "existing_files_preserved": true,
+  "physical_card_writes": false
+}

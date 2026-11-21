@@ -1,0 +1,10 @@
+{
+  "source_url": "https://r3tr0.de/mirror/sharpmz.org/download/mz700asm.zip",
+  "index_url": "https://r3tr0.de/mirror/sharpmz.org/mz-700/monirom.html",
+  "retrieved": "2026-11-14",
+  "archive_member": "Mz700.asm",
+  "description": "Published annotated disassembly of Sharp 1Z-013A PAL monitor, header dated June 1998. Reassembly is checked against the archived original 4096-byte monitor on every build.",
+  "original_rom_sha256": "ae1d65717414d4693158cbbd9ab707aa43e4e1ac0b2ae0e13ee3f68c66cba81b",
+  "source_sha256": "57b9afbd7e068240d0505bc467eb4ca28403420a15d69673032cfeec6a70af7b",
+  "attribution": "Sharp monitor program 1Z-013A, revision 83.4.7. Original notices and published source header retained. Local GPL licence applies to new code, not to the original Sharp component."
+}

@@ -1,0 +1,8 @@
+{
+  "bytes": 16785920,
+  "sha256": "35d7c5fa38e5ef9ccff351b52c351fb4db3488bc416c61db1ee72ce463421820",
+  "start_lba": 2048,
+  "sectors": 32785,
+  "drive_bytes": 8388608,
+  "boot_header_lba": 34816
+}

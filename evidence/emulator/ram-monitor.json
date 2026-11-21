@@ -1,0 +1,11 @@
+{
+  "monitor_sha256": "aa1b259a501845a6394116f7d3e9610d5e8ff9ebf9045ef7d3dc96037266bcf7",
+  "shadow_sha256": "5baa11562bb265682df985007d933a908511890b24f7c08e980489baedca0032",
+  "passed": [
+    "Physical reset boots ROM, loads and verifies the SD monitor, selects lower RAM, then enters the FAT32 menu",
+    "Menu monitor action enters the complete original command interface in RAM",
+    "G command switches safely through upper RAM to ROM and boots GIDE again",
+    "Reset recovers from corrupted shadow RAM by reloading it from the card",
+    "A corrupted SD monitor is rejected before selecting lower RAM or executing it"
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://ftpmirror2.infania.net/sites/www.cpm.z80.de/source.html",
+    "path": "source.html",
+    "bytes": 20814,
+    "sha256": "9c0adeb2d21a2157b0fc1a77a2052394012dc860d5b85b91fc5f9ec0c56b54d0"
+  },
+  {
+    "url": "https://ftpmirror2.infania.net/sites/www.cpm.z80.de/download/cpm3on2.zip",
+    "path": "cpm3on2.zip",
+    "bytes": 92392,
+    "sha256": "2250798a7bb123d6071ec67aeff1c8855e14f387062875262db296e865859d2e"
+  },
+  {
+    "url": "https://www.seasip.info/Cpm/software/cpm3src_unix.zip",
+    "path": "cpm3src_unix.zip",
+    "bytes": 566619,
+    "sha256": "d90cda1f25112ace3b436c4054304ace423331caa1f034c44f26698728a9fdb7"
+  }
+]

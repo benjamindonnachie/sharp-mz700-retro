@@ -1,0 +1,86 @@
+{
+  "ram_monitor_sha256": "5baa11562bb265682df985007d933a908511890b24f7c08e980489baedca0032",
+  "writer_sha256": "0c8059f99c5addffcf8f92ccdbcffd92134bdb214e0b2e57f020f69a30964357",
+  "cases": [
+    {
+      "case": "ordinary",
+      "passed": true
+    },
+    {
+      "case": "end-of-ram",
+      "passed": true
+    },
+    {
+      "case": "large",
+      "passed": true
+    },
+    {
+      "case": "zero-length",
+      "passed": true
+    },
+    {
+      "case": "overwrite-N restores upper RAM and source",
+      "passed": true
+    },
+    {
+      "case": "overwrite-Y restores upper RAM and source",
+      "passed": true
+    },
+    {
+      "case": "overwrite-RETURN restores upper RAM and source",
+      "passed": true
+    },
+    {
+      "case": "overlap-overlay rejected before overlay or disk writes",
+      "passed": true
+    },
+    {
+      "case": "lower-monitor rejected before overlay or disk writes",
+      "passed": true
+    },
+    {
+      "case": "native-workspace rejected before overlay or disk writes",
+      "passed": true
+    },
+    {
+      "case": "wraparound rejected before overlay or disk writes",
+      "passed": true
+    },
+    {
+      "case": "corrupt-writer fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "read-only fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "foreign-layout fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "missing-folder fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "bad-bpb fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "stack-overlap fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "changed-header fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "no-header fails safely without altering source, upper RAM or FAT32",
+      "passed": true
+    },
+    {
+      "case": "Injected restore-read failure holds recovery; R retries and restores all upper RAM before returning",
+      "passed": true
+    }
+  ]
+}

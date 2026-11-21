@@ -1,0 +1,22 @@
+{
+  "basic_sha256": "1c6560cc005e33aa5bac82d12564128f84272ef3cb4ecc6130390dfcc45d97f2",
+  "cases": [
+    {
+      "case": "Sequential numeric/string round trip across native blocks, sectors and fragmented clusters; create-only protection, deferred publication, abort and programme LOAD recovery",
+      "passed": true
+    },
+    {
+      "case": "Unmodified ANIMALS learns AXOLOTL, saves its database, then recognises it after a fresh interpreter/emulator reload; no cassette or UniCard",
+      "passed": true
+    }
+  ],
+  "startup_free_bytes": 30134,
+  "additional_reserved_ram": 0,
+  "native_commands": [
+    "WOPEN",
+    "PRINT/T",
+    "CLOSE",
+    "ROPEN",
+    "INPUT/T"
+  ]
+}

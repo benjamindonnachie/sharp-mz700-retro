@@ -1,0 +1,49 @@
+{
+  "monitor_sha256": "aa1b259a501845a6394116f7d3e9610d5e8ff9ebf9045ef7d3dc96037266bcf7",
+  "cases": [
+    {
+      "case": "CPU reset boots SD menu; cursor navigation works without an upper service ROM",
+      "passed": true
+    },
+    {
+      "case": "CP/M starts from the ROM-booted menu and executes VERS3",
+      "passed": true
+    },
+    {
+      "case": "Missing IDE reaches bounded recovery; L remains a usable native tape fallback",
+      "passed": true
+    },
+    {
+      "case": "bad-magic rejected after bounded retries, without card writes",
+      "passed": true
+    },
+    {
+      "case": "bad-checksum rejected after bounded retries, without card writes",
+      "passed": true
+    },
+    {
+      "case": "bad-kind rejected after bounded retries, without card writes",
+      "passed": true
+    },
+    {
+      "case": "bad-load rejected after bounded retries, without card writes",
+      "passed": true
+    },
+    {
+      "case": "zero-count rejected after bounded retries, without card writes",
+      "passed": true
+    },
+    {
+      "case": "oversized-count rejected after bounded retries, without card writes",
+      "passed": true
+    },
+    {
+      "case": "ROM read/write512 round trip, buffer guards and rejection above LBA28",
+      "passed": true
+    },
+    {
+      "case": "TAPE item loads native cassette pulses with original ROM primitives and returns to GIDE",
+      "passed": true
+    }
+  ]
+}

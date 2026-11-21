@@ -1,0 +1,17 @@
+{
+  "component": "pyz80",
+  "version": "1.3.0",
+  "source_url": "https://pypi.org/project/pyz80/1.3.0/",
+  "repository": "https://github.com/simonowen/pyz80",
+  "source": "Preserved pyz80-1.3.0-py3-none-any.whl from the Sharp catalogue; assembler source copied without modification",
+  "files": [
+    {
+      "name": "pyz80-COPYING",
+      "sha256": "189b1af95d661151e054cea10c91b3d754e4de4d3fecfb074c1fb29476f7167b"
+    },
+    {
+      "name": "pyz80.py",
+      "sha256": "f6cae08889a45d5dfde57bbeb4065a4f24730121997f76c497844f40aa6671af"
+    }
+  ]
+}

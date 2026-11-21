@@ -1,0 +1,11 @@
+{
+  "ram_monitor_sha256": "5baa11562bb265682df985007d933a908511890b24f7c08e980489baedca0032",
+  "passed": [
+    "Original S command and private F5E handler save a byte-exact MZF to /SAVES and restore upper RAM",
+    "S bounds a long filename to the native header field without overwriting length/load/entry metadata",
+    "RAM RDINF/RDDAT keep native cassette waveform loading through the physical ROM",
+    "RAM VERFY retains native cassette verification through the physical ROM",
+    "V command rejects changed RAM and returns through its relocated error handler",
+    "MELDY returns from a multi-note sequence with the RAM monitor bank restored"
+  ]
+}

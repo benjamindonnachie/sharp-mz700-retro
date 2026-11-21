@@ -1,0 +1,19 @@
+{
+  "sha256": "1c6560cc005e33aa5bac82d12564128f84272ef3cb4ecc6130390dfcc45d97f2",
+  "cases": [
+    {
+      "case": "Programme SAVE: N/Return preserve every byte, other keys ignored, Y replaces and reclaims old fragmented chain; MZT filename retained",
+      "passed": true
+    },
+    {
+      "case": "Sequential WOPEN: N preserves old file, Y streams privately until CLOSE, then replaces, reclaims and reloads the data",
+      "passed": true
+    },
+    {
+      "case": "Injected replacement readback failure preserves the original file and all directory entries, drains DRQ and permits LOAD",
+      "passed": true
+    }
+  ],
+  "startup_free_bytes": 30134,
+  "physical_card_writes": false
+}

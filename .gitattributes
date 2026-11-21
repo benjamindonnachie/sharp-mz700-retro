@@ -1,0 +1,18 @@
+*.asm text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.bin binary
+*.mzf binary
+*.MZF binary
+*.MZT binary
+*.com binary
+*.spr binary
+*.rel binary
+*.gz binary
+*.zip binary
+*.dsk binary
+# Preserve hash-pinned, third-party reference bytes, including original CRLF.
+cpm/mz700-monitor/reference/Mz700.asm -text
+cpm/gide/third_party/pyz80.py -text
+cpm/cpm3-on2/reference/gbios.asm -text
+cpm/cpm3-on2/reference/ldrbios.asm -text

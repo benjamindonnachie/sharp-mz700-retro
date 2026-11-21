@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-21",
+  "passed": [
+    "Published binary and compressed-image checksums",
+    "Both independent FAT32 file inspections",
+    "Fixed C/D volumes, boot header and CPMLDR slots",
+    "23 original public ROM vector bytes",
+    "Sixteen identical 4 KiB EPROM banks",
+    "ROM bootstrap/service signatures, bounds and padded checksums",
+    "Stock monitor and BASIC source hash checks",
+    "Default firmware rebuild reproduces pinned monitor and BASIC",
+    "Full CP/M source/toolchain rebuild completes and preserves the final public image",
+    "No private workstation paths or credential patterns in staged project source"
+  ],
+  "rom_image_sha256": "6ad480626382641ee5427ea7955d76fa233f0d747fedc3329e183c55ee8449d2"
+}
